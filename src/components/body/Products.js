@@ -24,15 +24,15 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
 
         const decrease = () => {
           decreasePrice();
-          decreaseQty(categoria.produtos.id);
+          decreaseQty(produto.id);
         };
 
         const increase = () => {
           increasePrice();
-          increaseQty(categoria.produtos.id);
+          increaseQty(produto.id);
         };
 
-        if (count[produto.id] < 0) {
+        if (count[produto.id] <= 0) {
           count[produto.id] = 0;
         }
 
@@ -40,7 +40,11 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
           <div class="subProduto">
             <p class="subNome">{produto.nome}</p>
             <div class="adder">
-              <button class="adtake" onClick={decrease}>
+              <button
+                class="adtake"
+                onClick={decrease}
+                disabled={count[produto.id] === 0}
+              >
                 -
               </button>
               <div>{count[produto.id]}</div>

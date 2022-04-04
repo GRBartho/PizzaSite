@@ -150,6 +150,10 @@ body {
   opacity:0.5;
 }
 
+.adtake:disabled {
+  opacity: 0.8;
+}
+
 .adder {
   display: flex;
   flex: 1;
