@@ -3,16 +3,16 @@ import React from "react";
 const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
   return (
     <div class="SubProducts">
-      {categoria?.produtos.map((produto, index) => {
+      {categoria?.produtos.map((produto) => {
         var result = Object.values(count).map((prod) => ({
           prod_id: prod.prod_id,
           cat_id: categoria.id,
           qtd: prod.qtd,
         }));
 
-        const quantity = result.map((produto) => {
-          return produto.qtd;
-        });
+        const prod = count.filter(
+          (o) => o.prod_id === produto.id && o.cat_id === categoria.id
+        )[0];
 
         const decreasePrice = () => {
           setTotalPrice((prev_state) => prev_state - produto.price);
@@ -23,23 +23,42 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
         };
 
         const increaseQty = () => {
-          if (
-            result[index].prod_id === produto.id &&
-            result[index].cat_id === categoria.id
-          ) {
-            setCount[index]((count[index].qtd = count[index].qtd + 1));
-          } else {
-            return;
+          if (prod.prod_id === produto.id && prod.cat_id === categoria.id) {
+            /*Problema*/ setCount((prev_count) => {
+              const obj = {
+                ...prev_count.filter(
+                  (o) => o.prod_id === produto.id && o.cat_id === categoria.id
+                ),
+              };
+              const arraySemObj = prev_count.filter(
+                (o) =>
+                  o.prod_id !== obj[0].prod_id || o.cat_id !== obj[0].cat_id
+              );
+
+              obj[0].qtd++;
+
+              return [...arraySemObj, obj[0]];
+            });
           }
         };
+
         const decreaseQty = () => {
-          if (
-            result[index].prod_id === produto.id &&
-            result[index].cat_id === categoria.id
-          ) {
-            setCount[index]((count[index].qtd = count[index].qtd - 1));
-          } else {
-            return;
+          if (prod.prod_id === produto.id && prod.cat_id === categoria.id) {
+            setCount((prev_count) => {
+              const obj = {
+                ...prev_count.filter(
+                  (o) => o.prod_id === produto.id && o.cat_id === categoria.id
+                ),
+              };
+              const arraySemObj = prev_count.filter(
+                (o) =>
+                  o.prod_id !== obj[0].prod_id || o.cat_id !== obj[0].cat_id
+              );
+
+              obj[0].qtd--;
+
+              return [...arraySemObj, obj[0]];
+            });
           }
         };
 
@@ -59,13 +78,17 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
             <div class="adder">
               <button
                 class="adtake"
-                onClick={() => decrease(produto.id, categoria.id)}
-                disabled={count[index].qtd === 0}
+                onClick={decrease}
+                disabled={prod.qtd === 0}
               >
                 -
               </button>
-              <div>{count[index].qtd}</div>
-              <button class="adtake" onClick={increase}>
+              <div>{prod.qtd}</div>
+              <button
+                class="adtake"
+                onClick={increase}
+                disabled={prod.qtd >= 50}
+              >
                 +
               </button>
             </div>
