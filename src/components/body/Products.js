@@ -4,7 +4,7 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
   return (
     <div class="SubProducts">
       {categoria?.produtos.map((produto, index) => {
-        var result = count.map((prod) => ({
+        var result = Object.values(count).map((prod) => ({
           prod_id: prod.prod_id,
           cat_id: categoria.id,
           qtd: prod.qtd,
@@ -27,13 +27,21 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
             result[index].prod_id === produto.id &&
             result[index].cat_id === categoria.id
           ) {
-            console.log("aaaaaaaaaaaaaaaaaaaaa");
+            setCount[index]((count[index].qtd = count[index].qtd + 1));
           } else {
-            console.log("esse tem numero");
+            return;
           }
         };
-
-        const decreaseQty = () => {};
+        const decreaseQty = () => {
+          if (
+            result[index].prod_id === produto.id &&
+            result[index].cat_id === categoria.id
+          ) {
+            setCount[index]((count[index].qtd = count[index].qtd - 1));
+          } else {
+            return;
+          }
+        };
 
         const decrease = () => {
           decreasePrice();
@@ -43,15 +51,6 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
         const increase = () => {
           increasePrice();
           increaseQty();
-          console.log(
-            produto.id,
-            categoria.id,
-            count[index].qtd,
-            produto.nome,
-            result[index].prod_id,
-            result[index].cat_id,
-            quantity[index]
-          );
         };
 
         return (
@@ -61,7 +60,7 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
               <button
                 class="adtake"
                 onClick={() => decrease(produto.id, categoria.id)}
-                disabled={count[produto.id].qtd === 0}
+                disabled={count[index].qtd === 0}
               >
                 -
               </button>
