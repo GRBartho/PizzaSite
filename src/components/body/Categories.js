@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
 import BodyProducts from "./Products";
+import App from "../../App";
 
 const BodyCategories = ({ setTotalPrice, setCount, count }) => {
   const [opened, setOpened] = useState(null);
@@ -13,6 +13,7 @@ const BodyCategories = ({ setTotalPrice, setCount, count }) => {
         { id: 1, nome: "Broto", price: 30 },
         { id: 2, nome: "Media", price: 40 },
         { id: 3, nome: "Grande", price: 50 },
+        { id: 4, nome: "Familia", price: 60 },
       ],
     },
     {
@@ -48,14 +49,14 @@ const BodyCategories = ({ setTotalPrice, setCount, count }) => {
   ];
 
   return (
-    <div class="MainProducts">
+    <div className="MainProducts">
       {categorias.map((categoria, index) => {
         return (
-          <div class="category">
-            <p class="foodTitle">
+          <div className="category">
+            <p className="foodTitle">
               {categoria.nome}
               <button
-                class="openList"
+                className="openList"
                 onClick={() => {
                   setOpened(categoria.id === opened ? null : categoria.id);
                 }}
@@ -70,6 +71,7 @@ const BodyCategories = ({ setTotalPrice, setCount, count }) => {
                 setTotalPrice={setTotalPrice}
                 setCount={setCount}
                 count={count}
+                App={App}
               />
             )}
           </div>

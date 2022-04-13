@@ -1,5 +1,4 @@
 import React from "react";
-import { ReactDOM } from "react";
 
 const change = () => {
   if (document.getElementById("mybtn").textContent === "Aberto") {
@@ -11,17 +10,18 @@ const change = () => {
 
 const headerBody = (toggle) => {
   return (
-    <div class="headerBody">
+    <div className="headerBody">
       <img
-        class="HBImage"
+        alt=""
+        className="HBImage"
         src="https://thumbs.dreamstime.com/b/italian-pizza-fresh-salad-red-wine-wide-composition-party-dinner-flat-lay-various-kinds-glasses-over-rustic-wooden-table-174281796.jpg"
       />
-      <div class="imgFooter">
-        <div class="IFTime">
+      <div className="imgFooter">
+        <div className="IFTime">
           <p>Pizza!</p>
         </div>
-        <div class="status">
-          <button class="opnbut" onClick={change} id="mybtn">
+        <div className="status">
+          <button className="opnbut" onClick={change} id="mybtn">
             Aberto
           </button>
         </div>

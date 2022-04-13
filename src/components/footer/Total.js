@@ -1,14 +1,11 @@
-import React, {useState} from "react";
-import { ReactDOM } from "react";
+import React from "react";
 
-const Total = ({totalPrice}) => {
-
-    return (
-        <div class='total'>
-            <p class='totalText'>TOTAL: R$ {totalPrice}</p>
-        </div>
-    )
-    
-}
+const Total = ({ totalPrice }) => {
+  return (
+    <div className="total">
+      <p className="totalText">TOTAL: R$ {totalPrice}</p>
+    </div>
+  );
+};
 
 export default Total;

@@ -1,12 +1,19 @@
 import React from "react";
-import { ReactDOM } from "react";
-import BodyCategories from "./Categories";
-import Total from "../footer/Total";
 
 const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
   return (
     <div class="SubProducts">
       {categoria?.produtos.map((produto, index) => {
+        var result = count.map((prod) => ({
+          prod_id: prod.prod_id,
+          cat_id: categoria.id,
+          qtd: prod.qtd,
+        }));
+
+        const quantity = result.map((produto) => {
+          return produto.qtd;
+        });
+
         const decreasePrice = () => {
           setTotalPrice((prev_state) => prev_state - produto.price);
         };
@@ -16,25 +23,36 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
         };
 
         const increaseQty = () => {
-          setCount((prev) => ({ ...prev, [produto.id]: prev[produto.id] + 1 }));
+          if (
+            result[index].prod_id === produto.id &&
+            result[index].cat_id === categoria.id
+          ) {
+            console.log("aaaaaaaaaaaaaaaaaaaaa");
+          } else {
+            console.log("esse tem numero");
+          }
         };
-        const decreaseQty = () => {
-          setCount((prev) => ({ ...prev, [produto.id]: prev[produto.id] - 1 }));
-        };
+
+        const decreaseQty = () => {};
 
         const decrease = () => {
           decreasePrice();
-          decreaseQty(produto.id);
+          decreaseQty();
         };
 
         const increase = () => {
           increasePrice();
-          increaseQty(produto.id);
+          increaseQty();
+          console.log(
+            produto.id,
+            categoria.id,
+            count[index].qtd,
+            produto.nome,
+            result[index].prod_id,
+            result[index].cat_id,
+            quantity[index]
+          );
         };
-
-        if (count[produto.id] <= 0) {
-          count[produto.id] = 0;
-        }
 
         return (
           <div class="subProduto">
@@ -42,12 +60,12 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
             <div class="adder">
               <button
                 class="adtake"
-                onClick={decrease}
-                disabled={count[produto.id] === 0}
+                onClick={() => decrease(produto.id, categoria.id)}
+                disabled={count[produto.id].qtd === 0}
               >
                 -
               </button>
-              <div>{count[produto.id]}</div>
+              <div>{count[index].qtd}</div>
               <button class="adtake" onClick={increase}>
                 +
               </button>
