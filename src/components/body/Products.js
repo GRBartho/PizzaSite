@@ -2,7 +2,7 @@ import React from "react";
 
 const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
   return (
-    <div class="SubProducts">
+    <div className="SubProducts">
       {categoria?.produtos.map((produto) => {
         const prod = count.filter(
           (o) => o.prod_id === produto.id && o.cat_id === categoria.id
@@ -64,11 +64,11 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
         };
 
         return (
-          <div class="subProduto">
-            <p class="subNome">{produto.nome}</p>
-            <div class="adder">
+          <div className="subProduto">
+            <p className="subNome">{produto.nome}</p>
+            <div className="adder">
               <button
-                class="adtake"
+                className="adtake"
                 onClick={decrease}
                 disabled={prod.qtd <= 0}
               >
@@ -76,7 +76,7 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
               </button>
               <div>{prod.qtd}</div>
               <button
-                class="adtake"
+                className="adtake"
                 onClick={increase}
                 disabled={prod.qtd >= 20}
               >
