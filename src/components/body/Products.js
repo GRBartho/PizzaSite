@@ -4,12 +4,6 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
   return (
     <div class="SubProducts">
       {categoria?.produtos.map((produto) => {
-        var result = Object.values(count).map((prod) => ({
-          prod_id: prod.prod_id,
-          cat_id: categoria.id,
-          qtd: prod.qtd,
-        }));
-
         const prod = count.filter(
           (o) => o.prod_id === produto.id && o.cat_id === categoria.id
         )[0];
@@ -23,43 +17,40 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
         };
 
         const increaseQty = () => {
-          if (prod.prod_id === produto.id && prod.cat_id === categoria.id) {
-            /*Problema*/ setCount((prev_count) => {
-              const obj = {
-                ...prev_count.filter(
-                  (o) => o.prod_id === produto.id && o.cat_id === categoria.id
-                ),
-              };
-              const arraySemObj = prev_count.filter(
-                (o) =>
-                  o.prod_id !== obj[0].prod_id || o.cat_id !== obj[0].cat_id
-              );
+          /*Problema*/ setCount((prev_count) => {
+            const obj = {
+              ...prev_count.filter(
+                (o) => o.prod_id === produto.id && o.cat_id === categoria.id
+              )[0],
+            };
 
-              obj[0].qtd++;
+            obj.qtd++;
 
-              return [...arraySemObj, obj[0]];
-            });
-          }
+            const arraySemObj = prev_count.filter(
+              (o) => o.prod_id !== obj.prod_id || o.cat_id !== obj.cat_id
+            );
+
+            return [...arraySemObj, obj];
+          });
         };
 
         const decreaseQty = () => {
-          if (prod.prod_id === produto.id && prod.cat_id === categoria.id) {
-            setCount((prev_count) => {
-              const obj = {
-                ...prev_count.filter(
-                  (o) => o.prod_id === produto.id && o.cat_id === categoria.id
-                ),
-              };
-              const arraySemObj = prev_count.filter(
-                (o) =>
-                  o.prod_id !== obj[0].prod_id || o.cat_id !== obj[0].cat_id
-              );
+          /*Problema*/ setCount((prev_count) => {
+            const obj = {
+              ...prev_count.filter(
+                (o) => o.prod_id === produto.id && o.cat_id === categoria.id
+              )[0],
+            };
 
-              obj[0].qtd--;
+            //mutando o objeto, o que faz o react strict mode renderizar de novo, fazendo com que use o setCount duas vezes
+            obj.qtd--;
 
-              return [...arraySemObj, obj[0]];
-            });
-          }
+            const arraySemObj = prev_count.filter(
+              (o) => o.prod_id !== obj.prod_id || o.cat_id !== obj.cat_id
+            );
+
+            return [...arraySemObj, obj];
+          });
         };
 
         const decrease = () => {
@@ -79,7 +70,7 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
               <button
                 class="adtake"
                 onClick={decrease}
-                disabled={prod.qtd === 0}
+                disabled={prod.qtd <= 0}
               >
                 -
               </button>
@@ -87,7 +78,7 @@ const BodyProducts = ({ categoria, setTotalPrice, setCount, count }) => {
               <button
                 class="adtake"
                 onClick={increase}
-                disabled={prod.qtd >= 50}
+                disabled={prod.qtd >= 20}
               >
                 +
               </button>
